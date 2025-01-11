@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class Message {
+public class Message implements AbstractMessage {
     private String id;
     private LocalDateTime timestamp;
     private String content;
@@ -13,7 +13,6 @@ public class Message {
     private boolean delivered;
     private boolean read;
 
-    // Constructor automatically generates a unique ID
     public Message(User from, User to, String content) {
         this.id = UUID.randomUUID().toString();
         this.timestamp = LocalDateTime.now();
@@ -24,7 +23,22 @@ public class Message {
         this.read = false;
     }
 
-    // Log to the terminal to check everything works
+    @Override
+    public String getContent() {
+        return content;
+    }
+
+    @Override
+    public void markDelivered() {
+        this.delivered = true;
+    }
+
+    @Override
+    public void markRead() {
+        this.read = true;
+    }
+
+    @Override
     public void log() {
         System.out.println("Message ID: " + id);
         System.out.println("Message from: " + from.getUsername() + " to: " + to.getUsername());
@@ -33,13 +47,6 @@ public class Message {
         System.out.println("Delivered: " + delivered);
         System.out.println("Read: " + read);
     }
-
-    public void markDelivered() {
-        this.delivered = true;
-    }
-
-    public void markRead() {
-        this.read = true;
-    }
 }
+
 
